@@ -1,0 +1,68 @@
+View menampilkan data dari yang paling baru/lama
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Daftar Kelas</title>
+</head>
+<body>
+    <h1>Daftar Kelas</h1>
+
+    @if($data->isEmpty())
+        <p>Tidak ada data kelas tersedia.</p>
+    @else
+        <ul>
+            @foreach ($data as $kelas)
+                <li>
+                    {{ $kelas->nama_kelas }} - {{ $kelas->created_at->format('d M Y H:i') }}
+                </li>
+            @endforeach
+        </ul>
+    @endif
+</body>
+</html>
+
+View yang menampilkan data tanpa kondisi
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Post</title>
+</head>
+<body>
+    <h1>Daftar Post</h1>
+
+    <ul>
+        @foreach($posts as $post)
+            <li>{{ $post->title }} - Status: {{ $post->status }}</li>
+        @endforeach
+    </ul>
+</body>
+</html>
+
+View Where
+
+<h1>Posts dengan Status 'Published'</h1>
+<ul>
+    @foreach($posts as $post)
+        <li>{{ $post->title }}</li>
+    @endforeach
+</ul>
+
+View With
+<h1>Posts dan Author</h1>
+<ul>
+    @foreach($posts as $post)
+        <li>{{ $post->title }} - Author: {{ $post->author->name }}</li>
+    @endforeach
+</ul>
+
+View Count
+<h1>Jumlah Posts dengan Status 'Published'</h1>
+<p>Total: {{ $postCount }}</p>
+

@@ -13,7 +13,7 @@ use App\Http\Controllers\ProdukBarangController;
 use App\Http\Controllers\SekolahController;
 
 // Route::resource('siswa', SiswaController::class);
- Route::resource('sekolah', SekolahController::class);
+//  Route::resource('sekolah', SekolahController::class);
 
 
 // Middleware untuk memastikan pengguna harus login

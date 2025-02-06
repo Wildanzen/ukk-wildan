@@ -1,0 +1,103 @@
+Controller
+
+controller yang hanya menampilkan data tanpa kondisi
+public function index()
+{
+    // Mengambil semua data dari model Siswa
+    $data = Siswa::all();
+
+    // Mengirim data ke view
+    return view('siswa.index', compact('data'));
+}
+
+controller yang menampilkan data dengan kondisi
+public function index()
+{
+    // Mengambil data siswa dengan usia lebih dari 18
+    $data = Siswa::where('usia', '>', 18)->get();
+
+    // Mengirim data ke view
+    return view('siswa.index', compact('data'));
+}
+
+Where digunakan untuk menampilkan data berdasarkan kondisi tertentu
+public function index()
+{
+    // Mengambil semua post yang statusnya 'published'
+    $posts = Post::where('status', 'published')->get();
+
+    return view('posts.index', compact('posts'));
+}
+
+With Digunakan untuk memuat relasi dalam satu query (eager loading).
+public function index()
+{
+    // Mengambil semua post beserta data relasi 'comments'
+    $posts = Post::with('comments')->get();
+
+    return view('posts.index', compact('posts'));
+}
+
+Count Digunakan untuk menghitung jumlah data dalam query.
+public function index()
+{
+    // Menghitung jumlah post yang statusnya 'published'
+    $postCount = Post::where('status', 'published')->count();
+
+    return view('posts.index', compact('postCount'));
+}
+
+WithCount Digunakan untuk menghitung jumlah data dari relasi dan menambahkannya sebagai kolom baru.
+public function index()
+{
+    // Mengambil semua post dengan jumlah komentar (comments_count)
+    $posts = Post::withCount('comments')->get();
+
+    return view('posts.index', compact('posts'));
+}
+
+asc
+public function index()
+{
+    // Mengambil semua post dan mengurutkannya berdasarkan judul secara abjad (A-Z)
+    $posts = Post::orderBy('title', 'asc')->get();
+
+    return view('posts.index', compact('posts'));
+}
+
+Find dan Findorfail Mengambil satu post berdasarkan primary key (ID). Jika data tidak ditemukan, Anda dapat menangani kondisi tersebut.
+public function index()
+{
+    // Mengambil post dengan ID 1
+    $post = Post::find(1);
+    if ($post) {
+        return view('posts.index', compact('post'));
+    } else {
+        return redirect()->route('posts.index')->with('error', 'Post tidak ditemukan!');
+    }
+}
+
+orWhere
+public function index()
+{
+    // Mengambil post yang statusnya 'published' atau 'draft'
+    $posts = Post::where('status', 'published')
+        ->orWhere('status', 'draft')
+        ->get();
+
+    return view('posts.index', compact('posts'));
+}
+
+Select digunakan untuk mengambil kolom tertentu dari tabel.
+public function index()
+{
+    // Mengambil kolom tertentu saja
+    $posts = Post::select('id', 'title', 'status')->get();
+
+    return view('posts.index', compact('posts'));
+}
+
+
+
+
+

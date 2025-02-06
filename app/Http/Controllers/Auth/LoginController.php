@@ -18,10 +18,6 @@ class LoginController extends Controller
     |
     */
 
-    public function showLoginForm()
-    {
-        return view('auth.login'); // Pastikan ini menuju file `resources/views/auth/login.blade.php`
-    }
     use AuthenticatesUsers;
 
     /**
@@ -29,7 +25,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/login';
+    protected $redirectTo = '/home';
 
     /**
      * Create a new controller instance.

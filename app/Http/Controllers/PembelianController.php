@@ -32,7 +32,7 @@ class PembelianController extends Controller
                 'barang_id' => 'required|exists:barang,id',
                 'supplier_id' => 'required|exists:supplier,id',
                 'jumlah' => 'required|integer|min:1',
-                'harga' => 'required|numeric|min:0',
+                'harga' => 'nullable|numeric|min:0',
                 'tanggal_pembelian' => 'required|date|after_or_equal:today',
             ],
             [
@@ -65,6 +65,12 @@ class PembelianController extends Controller
         return redirect()->route('pembelian.index')->with('success', 'Pembelian berhasil dicatat!');
     }
 
+    public function show($id)
+    {
+        $pembelian = Pembelian::findOrFail($id); // Ambil data berdasarkan ID
+        return view('pembelian.show', compact('pembelian')); // Tampilkan view dengan data
+    }
+
     public function destroy(Pembelian $pembelian)
     {
         // Update stok barang
@@ -77,5 +83,15 @@ class PembelianController extends Controller
         // Hapus data pembelian
         $pembelian->delete();
         return redirect()->route('pembelian.index')->with('success', 'Pembelian berhasil dihapus!');
+    }
+
+    // Method to get Barang by Supplier via AJAX
+    public function getBarangBySupplier(Request $request)
+    {
+        // Filter Barang by Supplier
+        $barang = Barang::where('supplier_id', $request->supplier_id)->get();
+
+        // Return a JSON response
+        return response()->json($barang);
     }
 }

@@ -25,7 +25,6 @@ class PenjualanController extends Controller
         $validatedData = $request->validate([
             'barang_id' => 'required|exists:barang,id',
             'jumlah' => 'required|integer|min:1',
-            'harga' => 'required|numeric|min:0',
             'tanggal_penjualan' => 'required|date|after_or_equal:today',
         ], [
             'barang_id.required' => 'Barang harus dipilih.',
@@ -33,30 +32,51 @@ class PenjualanController extends Controller
             'jumlah.required' => 'Jumlah wajib diisi.',
             'jumlah.integer' => 'Jumlah harus berupa angka.',
             'jumlah.min' => 'Jumlah minimal adalah 1.',
-            'harga.required' => 'Total harga wajib diisi.',
-            'harga.numeric' => 'Total harga harus berupa angka.',
-            'harga.min' => 'Total harga tidak boleh kurang dari 0.',
             'tanggal_penjualan.required' => 'Tanggal penjualan wajib diisi.',
             'tanggal_penjualan.date' => 'Tanggal penjualan harus berupa tanggal yang valid.',
             'tanggal_penjualan.after_or_equal' => 'Tanggal penjualan tidak boleh kurang dari hari ini.',
         ]);
 
-        // Simpan data ke database
+        // Cari barang berdasarkan ID
+        $barang = Barang::findOrFail($validatedData['barang_id']);
+
+        // Periksa stok barang
+        if ($barang->stok < $validatedData['jumlah']) {
+            return redirect()->back()->withErrors(['jumlah' => 'Stok barang tidak mencukupi.']);
+        }
+
+        // Kurangi stok barang
+        $barang->stok -= $validatedData['jumlah'];
+        $barang->save();
+
+        // Tambahkan harga barang ke data penjualan
+        $validatedData['harga'] = $barang->harga * $validatedData['jumlah']; // Total harga = harga satuan x jumlah
+
+        // Simpan data penjualan
         Penjualan::create($validatedData);
 
-        // Redirect dengan pesan sukses
-        return redirect()->route('penjualan.index')->with('success', 'Penjualan berhasil ditambahkan.');
+        return redirect()->route('penjualan.index')->with('success', 'Penjualan berhasil ditambahkan dan stok barang diperbarui.');
     }
 
+    public function show($id)
+    {
+        // Ambil data penjualan berdasarkan ID
+        $penjualan = Penjualan::with('barang')->findOrFail($id);
+
+        // Tampilkan view detail penjualan
+        return view('penjualan.show', compact('penjualan'));
+    }
 
     public function destroy(Penjualan $penjualan)
     {
         // Kembalikan stok barang
         $barang = Barang::find($penjualan->barang_id);
-        $barang->stok += $penjualan->jumlah;
-        $barang->save();
+        if ($barang) {
+            $barang->stok += $penjualan->jumlah;
+            $barang->save();
+        }
 
         $penjualan->delete();
-        return redirect()->route('penjualan.index')->with('success', 'Penjualan berhasil dihapus!');
+        return redirect()->route('penjualan.index')->with('success', 'Penjualan berhasil dihapus dan stok barang diperbarui.');
     }
 }

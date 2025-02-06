@@ -15,8 +15,8 @@
                 <li class="nav-item"><a class="nav-link text-white" href="{{ route('supplier.index') }}">Supplier</a>
                 </li>
                 <li class="nav-item"><a class="nav-link text-white" href="{{ route('barang.index') }}">Barang</a></li>
-                <li class="nav-item"><a class="nav-link text-white" href="{{ route('pembelian.index') }}">Pembelian</a>
-                </li>
+                {{-- <li class="nav-item"><a class="nav-link text-white" href="{{ route('pembelian.index') }}">Pembelian</a>
+                </li> --}}
                 <li class="nav-item"><a class="nav-link text-white" href="{{ route('penjualan.index') }}">Penjualan</a>
                 </li>
             </ul>

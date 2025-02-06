@@ -23,6 +23,10 @@ class KategoriController extends Controller
     {
         $request->validate([
             'nama_kategori' => 'required|unique:kategori,nama_kategori|max:255',
+        ], [
+            'nama_kategori.required' => 'Nama kategori harus diisi.',
+            'nama_kategori.unique' => 'Nama kategori sudah ada, silakan gunakan nama lain.',
+            'nama_kategori.max' => 'Nama kategori tidak boleh lebih dari 255 karakter.',
         ]);
 
         Kategori::create($request->all());
@@ -43,6 +47,10 @@ class KategoriController extends Controller
     {
         $request->validate([
             'nama_kategori' => 'required|max:255|unique:kategori,nama_kategori,' . $kategori->id,
+        ], [
+            'nama_kategori.required' => 'Nama kategori harus diisi.',
+            'nama_kategori.unique' => 'Nama kategori sudah ada, silakan gunakan nama lain.',
+            'nama_kategori.max' => 'Nama kategori tidak boleh lebih dari 255 karakter.',
         ]);
 
         $kategori->update($request->all());

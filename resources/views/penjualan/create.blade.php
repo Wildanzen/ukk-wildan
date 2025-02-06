@@ -19,7 +19,7 @@
                             <option value="">-- Pilih Barang --</option>
                             @foreach ($barang as $item)
                                 <option value="{{ $item->id }}" {{ old('barang_id') == $item->id ? 'selected' : '' }}>
-                                    {{ $item->nama_barang }}
+                                    {{ $item->nama_barang }} (Rp {{ number_format($item->harga, 0, ',', '.') }})
                                 </option>
                             @endforeach
                         </select>
@@ -31,17 +31,8 @@
                     <div class="mb-3">
                         <label for="jumlah" class="form-label">Jumlah</label>
                         <input type="number" name="jumlah" id="jumlah"
-                            class="form-control @error('jumlah') is-invalid @enderror" value="{{ old('jumlah') }}">
+                            class="form-control @error('jumlah') is-invalid @enderror" value="{{ old('jumlah') }}" min="1">
                         @error('jumlah')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="harga" class="form-label">Total Harga</label>
-                        <input type="number" name="harga" id="harga"
-                            class="form-control @error('harga') is-invalid @enderror" value="{{ old('harga') }}">
-                        @error('harga')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>

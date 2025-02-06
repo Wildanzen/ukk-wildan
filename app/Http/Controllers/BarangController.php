@@ -22,7 +22,6 @@ class BarangController extends Controller
         $supplier = Supplier::all();
         return view('barang.create', compact('kategori', 'supplier'));
     }
-
     public function store(Request $request)
     {
         $validated = $request->validate(
@@ -43,9 +42,9 @@ class BarangController extends Controller
 
     public function edit(Barang $barang)
     {
-        $kategori = Kategori::all();
+        $kategoris = Kategori::all();
         $supplier = Supplier::all();
-        return view('barang.edit', compact('barang', 'kategori', 'supplier'));
+        return view('barang.edit', compact('barang', 'kategoris', 'supplier'));
     }
 
     public function update(Request $request, Barang $barang)
@@ -53,10 +52,10 @@ class BarangController extends Controller
         $validated = $request->validate(
             [
                 'nama_barang' => 'required|max:255',
+                'stok' => 'required|integer|min:0',
                 'kategori_id' => 'required|exists:kategori,id',
                 'supplier_id' => 'required|exists:supplier,id',
                 'harga' => 'required|numeric|min:0',
-                'stok' => 'required|integer|min:0',
             ],
             $this->validationMessages(),
             $this->attributeNames()

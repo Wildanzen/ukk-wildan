@@ -14,7 +14,7 @@
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th>#</th>
+                    <th>No</th>
                     <th>Barang</th>
                     <th>Jumlah</th>
                     <th>Total Harga</th>
@@ -30,6 +30,13 @@
                         <td>{{ number_format($item->harga, 0, ',', '.') }}</td>
                         <td>
                             <a href="{{ route('penjualan.show', $item->id) }}" class="btn btn-info btn-sm">Lihat</a>
+
+                            <!-- Tombol Hapus -->
+                            <form action="{{ route('penjualan.destroy', $item->id) }}" method="POST" class="d-inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Hapus</button>
+                            </form>
                         </td>
                     </tr>
                 @empty
@@ -37,6 +44,7 @@
                         <td colspan="5" class="text-center">Tidak ada data.</td>
                     </tr>
                 @endforelse
+
             </tbody>
         </table>
     </div>

@@ -9,26 +9,39 @@
         @method('PUT')
 
         <div class="mb-3">
-            <label for="nama_supplier" class="form-label">Supplier</label>
-            <input type="text" name="nama_supplier" id="nama_supplier" class="form-control" value="{{ old('nama_supplier', $supplier->nama_supplier) }}" required>
+            <label for="nama_supplier" class="form-label">Nama Supplier</label>
+            <input
+                type="text"
+                name="nama_supplier"
+                id="nama_supplier"
+                class="form-control @error('nama_supplier') is-invalid @enderror"
+                value="{{ old('nama_supplier', $supplier->nama_supplier) }}">
             @error('nama_supplier')
-                <small class="text-danger">{{ $message }}</small>
+                <small class="invalid-feedback">{{ $message }}</small>
             @enderror
         </div>
 
         <div class="mb-3">
             <label for="alamat" class="form-label">Alamat</label>
-            <textarea name="alamat" id="alamat" class="form-control" required>{{ old('alamat', $supplier->alamat) }}</textarea>
+            <textarea
+                name="alamat"
+                id="alamat"
+                class="form-control @error('alamat') is-invalid @enderror">{{ old('alamat', $supplier->alamat) }}</textarea>
             @error('alamat')
-                <small class="text-danger">{{ $message }}</small>
+                <small class="invalid-feedback">{{ $message }}</small>
             @enderror
         </div>
 
         <div class="mb-3">
-            <label for="kontak" class="form-label">Telepon</label>
-            <input type="text" name="kontak" id="kontak" class="form-control" value="{{ old('kontak', $supplier->kontak) }}" required>
+            <label for="kontak" class="form-label">Nomor Telepon</label>
+            <input
+                type="text"
+                name="kontak"
+                id="kontak"
+                class="form-control @error('kontak') is-invalid @enderror"
+                value="{{ old('kontak', $supplier->kontak) }}">
             @error('kontak')
-                <small class="text-danger">{{ $message }}</small>
+                <small class="invalid-feedback">{{ $message }}</small>
             @enderror
         </div>
 

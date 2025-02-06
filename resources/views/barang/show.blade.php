@@ -18,7 +18,6 @@
         </div>
         <div class="card-footer">
             <a href="{{ route('barang.index') }}" class="btn btn-secondary">Kembali</a>
-            <a href="{{ route('barang.edit', $barang->id) }}" class="btn btn-warning">Edit</a>
         </div>
     </div>
 </div>

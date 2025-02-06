@@ -10,7 +10,7 @@ class Pembelian extends Model
     use HasFactory;
 
     protected $table = 'pembelian';
-    protected $fillable = ['barang_id', 'supplier_id', 'jumlah', 'harga', 'tanggal_pembelian'];
+    protected $fillable = ['barang_id', 'supplier_id', 'jumlah', 'tanggal_pembelian'];
 
     public function barang()
     {
@@ -22,5 +22,5 @@ class Pembelian extends Model
         return $this->belongsTo(Supplier::class, 'supplier_id');
     }
 
-    
+
 }

@@ -1,51 +1,13 @@
-@extends('layouts.app')
+@extends('layouts.app_modern')
 
 @section('content')
 <div class="container-fluid">
     <div class="row">
-        <!-- Sidebar/Navbar -->
-        <nav class="col-md-2 d-none d-md-block bg-primary text-white sidebar">
-            <div class="sidebar-sticky">
-                <ul class="nav flex-column">
-                    <li class="nav-item">
-                        <a class="nav-link text-white active" href="#">
-                            <i class="fas fa-home"></i> Dashboard
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="{{ route('kategori.index') }}">
-                            <i class="fas fa-list"></i> Kategori
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="{{ route('barang.index') }}">
-                            <i class="fas fa-box"></i> Barang
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="{{ route('supplier.index') }}">
-                            <i class="fas fa-truck"></i> Supplier
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="{{ route('pembelian.index') }}">
-                            <i class="fas fa-shopping-cart"></i> Pembelian
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="{{ route('penjualan.index') }}">
-                            <i class="fas fa-cash-register"></i> Penjualan
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-
         <!-- Main Content -->
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
             <div
                 class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                <h1 class="h2">Dashboard</h1>
+                <h5 class="h5">Dashboard</h5>
             </div>
 
             <!-- Cards Section -->

@@ -32,11 +32,6 @@
                             <i class="fas fa-shopping-cart"></i> Pembelian
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="{{ route('penjualan.index') }}">
-                            <i class="fas fa-cash-register"></i> Penjualan
-                        </a>
-                    </li>
                 </ul>
             </div>
         </nav>

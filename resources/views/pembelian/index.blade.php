@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="card">
-        <h5 class="card-header">Daftar Barang</h5>
+        <h5 class="card-header">Tambah Barang</h5>
         <div class="card-body">
             <a href="{{ route('pembelian.create') }}" class="btn btn-primary mb-3">Tambah Barang</a>
 
@@ -31,7 +31,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="text-center">Tidak ada data.</td>
+                            <td colspan="7" class="text-center">Tidak ada data.</td>
                         </tr>
                     @endforelse
                 </tbody>

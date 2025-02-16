@@ -4,7 +4,7 @@
     <div class="card">
         <h5 class="card-header">Daftar Supplier</h5>
         <div class="card-body">
-            <a href="{{ route('supplier.create') }}" class="btn btn-primary mb-3">Tambah Supplier</a>
+            <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addSupplierModal">Tambah Supplier</button>
 
             @if (session('success'))
                 <div class="alert alert-success">{{ session('success') }}</div>
@@ -36,8 +36,7 @@
                                     <form action="{{ route('supplier.destroy', $item->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm"
-                                            onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Hapus</button>
+                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Hapus</button>
                                     </form>
                                 </div>
                             </td>
@@ -51,10 +50,42 @@
             </table>
         </div>
     </div>
+
+    <!-- Modal Tambah Supplier -->
+    <div class="modal fade" id="addSupplierModal" tabindex="-1" aria-labelledby="addSupplierModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addSupplierModalLabel">Tambah Supplier</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('supplier.store') }}" method="POST">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="nama_supplier" class="form-label">Nama Supplier</label>
+                            <input type="text" class="form-control" id="nama_supplier" name="nama_supplier" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="alamat" class="form-label">Alamat</label>
+                            <input type="text" class="form-control" id="alamat" name="alamat" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="kontak" class="form-label">Telepon</label>
+                            <input type="text" class="form-control" id="kontak" name="kontak" required>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                            <button type="submit" class="btn btn-primary">Simpan</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @push('scripts')
-    <!-- Tambahkan jQuery dan DataTables -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>

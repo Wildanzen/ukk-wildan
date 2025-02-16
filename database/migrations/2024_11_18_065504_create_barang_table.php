@@ -29,7 +29,7 @@ class CreateBarangTable extends Migration
 
             $table->foreign('kategori_id')
                 ->references('id')->on('kategori')
-                ->onDelete('restrict');// Menambahkan ON DELETE RESTRICT
+                ->onDelete('restrict'); // Menambahkan ON DELETE RESTRICT
         });
     }
 

@@ -19,6 +19,8 @@
                         <th>No</th>
                         <th>Nama Barang</th>
                         <th>Kategori</th>
+                        <th>Harga</th>
+                        <th>Stok</th>
                         <th>Supplier</th>
                         <th>Aksi</th>
                     </tr>
@@ -28,23 +30,23 @@
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $item->nama_barang }}</td>
-                            <td>{{ $item->kategori->nama_kategori ?? 'Tidak ada' }}</td>
-                            <td>{{ $item->supplier->nama_supplier ?? 'Tidak ada' }}</td>
+                            <td>{{ $item->kategori->nama_kategori }}</td>
+                            <td>Rp {{ number_format($item->harga, 0, ',', '.') }}</td>
+                            <td>{{ $item->stok }}</td>
+                            <td>{{ $item->supplier ? $item->supplier->nama_supplier : 'Tidak ada supplier' }}</td>
                             <td>
-                                <div class="d-flex">
+                                <form action="{{ route('barang.destroy', $item->id) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <a href="{{ route('barang.show', $item->id) }}" class="btn btn-info btn-sm me-2">Lihat</a>
                                     <a href="{{ route('barang.edit', $item->id) }}" class="btn btn-warning btn-sm me-2">Edit</a>
-                                    <form action="{{ route('barang.destroy', $item->id) }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm"
-                                            onclick="return confirm('Yakin ingin menghapus?')">Hapus</button>
-                                    </form>
-                                </div>
+                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus?')">Hapus</button>
+                                </form>
                             </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="text-center">Tidak ada data.</td>
+                            <td colspan="7" class="text-center">Tidak ada data.</td>
                         </tr>
                     @endforelse
                 </tbody>

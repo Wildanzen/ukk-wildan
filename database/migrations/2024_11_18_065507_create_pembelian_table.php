@@ -13,7 +13,7 @@ class CreatePembelianTable extends Migration
             $table->unsignedBigInteger('supplier_id');
             $table->unsignedBigInteger('barang_id');
             $table->integer('jumlah');
-            $table->decimal('harga', 10, 2);
+            // $table->decimal('harga', 10, 2);
             $table->date('tanggal_pembelian');
             $table->timestamps();
 

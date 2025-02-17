@@ -5,39 +5,46 @@ use App\Http\Controllers\{BarangController, KategoriController, SupplierControll
 
 // Middleware untuk memastikan pengguna harus login
 Route::middleware(['auth'])->group(function () {
+    // Redirect dashboard sesuai peran
+    Route::get('/dashboard', function () {
+        if (auth()->user()->role === 'admin') {
+            return redirect()->route('admin.dashboard');
+        } elseif (auth()->user()->role === 'petugas') {
+            return redirect()->route('petugas.dashboard');
+        }
+        abort(403, 'Unauthorized');
+    })->name('dashboard');
 
-    // Rute untuk admin (bisa akses semuanya)
+    // Dashboard admin
     Route::group(['middleware' => function ($request, $next) {
         if (auth()->check() && auth()->user()->role === 'admin') {
             return $next($request);
         }
         abort(403, 'Unauthorized');
     }], function () {
+        Route::get('/admin/dashboard', [HomeController::class, 'adminDashboard'])->name('admin.dashboard');
         Route::resource('kategori', KategoriController::class);
         Route::resource('barang', BarangController::class);
         Route::resource('supplier', SupplierController::class);
         Route::resource('pembelian', PembelianController::class);
-        Route::resource('penjualan', PenjualanController::class); // Admin juga bisa mengakses penjualan
     });
 
-    // Rute khusus petugas (tetap dibatasi)
+    // Dashboard petugas
     Route::group(['middleware' => function ($request, $next) {
-        if (auth()->check() && (auth()->user()->role === 'petugas' || auth()->user()->role === 'admin')) {
+        if (auth()->check() && auth()->user()->role === 'petugas') {
             return $next($request);
         }
         abort(403, 'Unauthorized');
     }], function () {
+        Route::get('dashboard', [HomeController::class, 'petugasDashboard'])->name('petugas.dashboard');
         Route::resource('penjualan', PenjualanController::class);
     });
-
-    // Halaman dashboard (home)
-    Route::get('/home', [HomeController::class, 'index'])->name('home');
 });
 
-// Halaman Welcome (Tidak membutuhkan autentikasi)
+// Halaman Welcome (Tanpa autentikasi)
 Route::get('/', function () {
     return view('welcome');
 });
 
-// Default routes untuk autentikasi (login, register, dll.)
+// Default routes untuk autentikasi
 Auth::routes();

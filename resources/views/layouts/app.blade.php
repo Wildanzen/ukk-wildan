@@ -108,7 +108,7 @@
                 <nav class="col-md-2 d-none d-md-block sidebar">
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link active" href="{{ url('/home') }}">
+                            <a class="nav-link active" href="{{ url('dashboard.admin') }}">
                                 <i class="fas fa-home"></i> Dashboard
                             </a>
                         </li>

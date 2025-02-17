@@ -3,25 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
-    public function __construct()
+    public function adminDashboard()
     {
-        $this->middleware('auth');
+        return view('/dashboard.admin'); // Pastikan file ini ada di resources/views/admin/dashboard.blade.php
     }
 
-    public function index()
+    public function petugasDashboard()
     {
-        $user = Auth::user();
-
-        if ($user->role == 'admin') {
-            return redirect()->route('dashboard.admin');
-        } elseif ($user->role == 'petugas') {
-            return redirect()->route('dashboard.petugas');
-        }
-
-        return redirect()->route('home'); // Default jika peran tidak dikenali
+        return view('/dashboard.petugas'); // Pastikan file ini ada di resources/views/petugas/dashboard.blade.php
     }
 }

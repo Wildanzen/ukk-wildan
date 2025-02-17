@@ -36,7 +36,7 @@ Route::middleware(['auth'])->group(function () {
         }
         abort(403, 'Unauthorized');
     }], function () {
-        Route::get('dashboard', [HomeController::class, 'petugasDashboard'])->name('petugas.dashboard');
+        Route::get('/dashboard', [HomeController::class, 'petugasDashboard'])->name('petugas.dashboard');
         Route::resource('penjualan', PenjualanController::class);
     });
 });

@@ -13,8 +13,12 @@ class BarangController extends Controller
     public function index()
     {
         $barang = Barang::with('kategori', 'supplier')->get();
-        return view('barang.index', compact('barang'));
+        $kategori = Kategori::all(); // Ambil semua kategori
+        $supplier = Supplier::all(); // Ambil semua supplier jika diperlukan
+
+        return view('barang.index', compact('barang', 'kategori', 'supplier'));
     }
+
 
     public function create()
     {

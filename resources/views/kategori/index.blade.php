@@ -54,7 +54,6 @@
             </table>
         </div>
     </div>
-
     <!-- Modal -->
     <div class="modal fade" id="kategoriModal" tabindex="-1" aria-labelledby="kategoriModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -66,14 +65,15 @@
                 <div class="modal-body">
                     <form action="{{ route('kategori.store') }}" method="POST">
                         @csrf
+                        <input type="hidden" name="form_type" value="tambah">
                         <div class="mb-3">
                             <label for="nama_kategori" class="form-label">Nama Kategori</label>
                             <input type="text" name="nama_kategori"
-                                class="form-control @error('nama_kategori') is-invalid @enderror"
-                                value="{{ old('nama_kategori') }}">
-                            @error('nama_kategori')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
+                                class="form-control @if(session()->has('errors') && old('form_type') === 'tambah') is-invalid @endif"
+                                value="{{ session()->has('errors') && old('form_type') === 'tambah' ? old('nama_kategori') : '' }}">
+                            @if(session()->has('errors') && old('form_type') === 'tambah')
+                                <div class="invalid-feedback">{{ $errors->first('nama_kategori') }}</div>
+                            @endif
                         </div>
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-primary">Simpan</button>
@@ -84,7 +84,6 @@
             </div>
         </div>
     </div>
-
     @foreach ($kategori as $item)
         <!-- Modal Edit -->
         <div class="modal fade" id="editModal{{ $item->id }}" tabindex="-1"
@@ -99,14 +98,15 @@
                         <form action="{{ route('kategori.update', $item->id) }}" method="POST">
                             @csrf
                             @method('PUT')
+                            <input type="hidden" name="form_type" value="edit-{{ $item->id }}">
                             <div class="mb-3">
                                 <label for="nama_kategori" class="form-label">Nama Kategori</label>
                                 <input type="text" name="nama_kategori"
-                                    class="form-control @error('nama_kategori') is-invalid @enderror"
-                                    value="{{ old('nama_kategori', $item->nama_kategori) }}">
-                                @error('nama_kategori')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
+                                    class="form-control @if(session()->has('errors') && old('form_type') === 'edit-' . $item->id) is-invalid @endif"
+                                    value="{{ session()->has('errors') && old('form_type') === 'edit-' . $item->id ? old('nama_kategori') : $item->nama_kategori }}">
+                                @if(session()->has('errors') && old('form_type') === 'edit-' . $item->id)
+                                    <div class="invalid-feedback">{{ $errors->first('nama_kategori') }}</div>
+                                @endif
                             </div>
                             <div class="modal-footer">
                                 <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
@@ -119,7 +119,6 @@
         </div>
     @endforeach
 @endsection
-
 @foreach ($kategori as $item)
     <!-- Modal Detail -->
     <div class="modal fade" id="showModal{{ $item->id }}" tabindex="-1" aria-labelledby="showModalLabel{{ $item->id }}" aria-hidden="true">
@@ -184,5 +183,11 @@
                 $(".alert").fadeOut("slow");
             }, 4000);
         });
+
+          $(document).ready(function() {
+        @if (session('modal') == 'tambah')
+            $('#kategoriModal').modal('show');
+        @endif
+    });
     </script>
 @endpush

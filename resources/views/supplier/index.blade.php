@@ -54,26 +54,18 @@
                                         <form action="{{ route('supplier.update', $item->id) }}" method="POST">
                                             @csrf
                                             @method('PUT')
+                                            <input type="hidden" name="form_type" value="edit">
                                             <div class="mb-3">
                                                 <label for="nama_supplier{{ $item->id }}" class="form-label">Nama Supplier</label>
-                                                <input type="text" class="form-control @error('nama_supplier') is-invalid @enderror" id="nama_supplier{{ $item->id }}" name="nama_supplier" value="{{ old('nama_supplier', $item->nama_supplier) }}">
-                                                @error('nama_supplier')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                @enderror
+                                                <input type="text" class="form-control" id="nama_supplier{{ $item->id }}" name="nama_supplier" value="{{ $item->nama_supplier }}">
                                             </div>
                                             <div class="mb-3">
                                                 <label for="alamat{{ $item->id }}" class="form-label">Alamat</label>
-                                                <textarea class="form-control @error('alamat') is-invalid @enderror" id="alamat{{ $item->id }}" name="alamat">{{ old('alamat', $item->alamat) }}</textarea>
-                                                @error('alamat')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                @enderror
+                                                <textarea class="form-control" id="alamat{{ $item->id }}" name="alamat">{{ $item->alamat }}</textarea>
                                             </div>
                                             <div class="mb-3">
                                                 <label for="kontak{{ $item->id }}" class="form-label">Nomor Telepon</label>
-                                                <input type="text" class="form-control @error('kontak') is-invalid @enderror" id="kontak{{ $item->id }}" name="kontak" value="{{ old('kontak', $item->kontak) }}">
-                                                @error('kontak')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                @enderror
+                                                <input type="text" class="form-control" id="kontak{{ $item->id }}" name="kontak" value="{{ $item->kontak }}">
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
@@ -105,23 +97,24 @@
                 <div class="modal-body">
                     <form action="{{ route('supplier.store') }}" method="POST">
                         @csrf
+                        <input type="hidden" name="form_type" value="create">
                         <div class="mb-3">
                             <label for="nama_supplier" class="form-label">Nama Supplier</label>
-                            <input type="text" class="form-control @error('nama_supplier') is-invalid @enderror" id="nama_supplier" name="nama_supplier">
+                            <input type="text" class="form-control @if(session()->has('errors') && old('form_type') == 'create') is-invalid @endif" id="nama_supplier" name="nama_supplier" value="{{ old('nama_supplier') }}">
                             @error('nama_supplier')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="mb-3">
                             <label for="alamat" class="form-label">Alamat</label>
-                            <input type="text" class="form-control @error('alamat') is-invalid @enderror" id="alamat" name="alamat">
+                            <input type="text" class="form-control @if(session()->has('errors') && old('form_type') == 'create') is-invalid @endif" id="alamat" name="alamat" value="{{ old('alamat') }}">
                             @error('alamat')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="mb-3">
                             <label for="kontak" class="form-label">Telepon</label>
-                            <input type="text" class="form-control @error('kontak') is-invalid @enderror" id="kontak" name="kontak">
+                            <input type="text" class="form-control @if(session()->has('errors') && old('form_type') == 'create') is-invalid @endif" id="kontak" name="kontak" value="{{ old('kontak') }}">
                             @error('kontak')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -136,28 +129,3 @@
         </div>
     </div>
 @endsection
-@push('scripts')
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
-
-    <script>
-        $(document).ready(function() {
-            $('#supplierTable').DataTable({
-                "language": {
-                    "search": "Cari:",
-                    "lengthMenu": "Tampilkan _MENU_ data per halaman",
-                    "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
-                    "infoEmpty": "Tidak ada data tersedia",
-                    "infoFiltered": "(disaring dari _MAX_ total data)",
-                    "paginate": {
-                        "first": "Awal",
-                        "last": "Akhir",
-                        "next": "Selanjutnya",
-                        "previous": "Sebelumnya"
-                    }
-                }
-            });
-        });
-    </script>
-@endpush

@@ -33,33 +33,15 @@
                             <span class="hide-menu">Home</span>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="{{ route('admin.dashboard') }}" aria-expanded="false">
+                            <a class="sidebar-link" href="{{ route('petugas.dashboard') }}" aria-expanded="false">
                                 <span><i class="fas fa-home"></i></span>
                                 <span class="hide-menu">Dashboard</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="{{ route('kategori.index') }}" aria-expanded="false">
-                                <span><i class="fas fa-list"></i></span>
-                                <span class="hide-menu">Kategori</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a class="sidebar-link" href="{{ route('supplier.index') }}" aria-expanded="false">
-                                <span><i class="fas fa-truck"></i></span>
-                                <span class="hide-menu">Supplier</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a class="sidebar-link" href="{{ route('barang.index') }}" aria-expanded="false">
-                                <span><i class="fas fa-box"></i></span>
-                                <span class="hide-menu">Barang</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a class="sidebar-link" href="{{ route('pembelian.index') }}" aria-expanded="false">
-                                <span><i class="fas fa-shopping-cart"></i></span>
-                                <span class="hide-menu">Pembelian</span>
+                            <a class="sidebar-link" href="{{ route('penjualan.index') }}" aria-expanded="false">
+                                <span><i class="fas fa-cash-register"></i></span>
+                                <span class="hide-menu">Penjualan</span>
                             </a>
                         </li>
                     </ul>

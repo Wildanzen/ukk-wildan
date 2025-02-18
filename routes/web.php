@@ -16,12 +16,7 @@ Route::middleware(['auth'])->group(function () {
     })->name('dashboard');
 
     // Dashboard admin
-    Route::group(['middleware' => function ($request, $next) {
-        if (auth()->check() && auth()->user()->role === 'admin') {
-            return $next($request);
-        }
-        abort(403, 'Unauthorized');
-    }], function () {
+    Route::middleware(['role:admin'])->group(function () {
         Route::get('/admin/dashboard', [HomeController::class, 'adminDashboard'])->name('admin.dashboard');
         Route::resource('kategori', KategoriController::class);
         Route::resource('barang', BarangController::class);
@@ -30,13 +25,8 @@ Route::middleware(['auth'])->group(function () {
     });
 
     // Dashboard petugas
-    Route::group(['middleware' => function ($request, $next) {
-        if (auth()->check() && auth()->user()->role === 'petugas') {
-            return $next($request);
-        }
-        abort(403, 'Unauthorized');
-    }], function () {
-        Route::get('/dashboard', [HomeController::class, 'petugasDashboard'])->name('petugas.dashboard');
+    Route::middleware(['role:petugas'])->group(function () {
+        Route::get('/petugas/dashboard', [HomeController::class, 'petugasDashboard'])->name('petugas.dashboard');
         Route::resource('penjualan', PenjualanController::class);
     });
 });

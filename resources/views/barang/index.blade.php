@@ -4,8 +4,10 @@
     <div class="card">
         <h5 class="card-header">Daftar Barang</h5>
         <div class="card-body">
+            <!-- Button to trigger modal -->
             <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#modalCreate">Tambah Barang</button>
 
+            <!-- Display success and error messages -->
             @if (session('success'))
                 <div class="alert alert-success">{{ session('success') }}</div>
             @endif
@@ -13,6 +15,7 @@
                 <div class="alert alert-danger">{{ session('error') }}</div>
             @endif
 
+            <!-- Table of barang -->
             <table id="barangTable" class="table table-striped display">
                 <thead>
                     <tr>
@@ -39,8 +42,15 @@
                                     @csrf
                                     @method('DELETE')
                                     <a href="{{ route('barang.show', $item->id) }}" class="btn btn-info btn-sm me-2">Lihat</a>
-                                    <a href="{{ route('barang.edit', $item->id) }}" class="btn btn-warning btn-sm me-2">Edit</a>
-                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus?')">Hapus</button>
+                                    <a href="#" class="btn btn-warning btn-sm me-2 editBarangBtn"
+                                        data-id="{{ $item->id }}" data-nama="{{ $item->nama_barang }}"
+                                        data-stok="{{ $item->stok }}" data-kategori="{{ $item->kategori_id }}"
+                                        data-harga="{{ $item->harga }}" data-supplier="{{ $item->supplier_id }}"
+                                        data-bs-toggle="modal" data-bs-target="#modalEditBarang">
+                                        Edit
+                                    </a>
+                                    <button type="submit" class="btn btn-danger btn-sm"
+                                        onclick="return confirm('Yakin ingin menghapus?')">Hapus</button>
                                 </form>
                             </td>
                         </tr>
@@ -54,59 +64,13 @@
         </div>
     </div>
 
-    <!-- Modal Tambah Barang -->
-    <div class="modal fade" id="modalCreate" tabindex="-1" aria-labelledby="modalCreateLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalCreateLabel">Tambah Barang</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="{{ route('barang.store') }}" method="POST">
-                        @csrf
-                        <div class="mb-3">
-                            <label for="nama_barang" class="form-label">Nama Barang</label>
-                            <input type="text" name="nama_barang" id="nama_barang" class="form-control" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="kategori_id" class="form-label">Kategori</label>
-                            <select name="kategori_id" id="kategori_id" class="form-select" required>
-                                <option value="">-- Pilih Kategori --</option>
-                                @foreach ($kategori as $item)
-                                    <option value="{{ $item->id }}">{{ $item->nama_kategori }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="harga" class="form-label">Harga</label>
-                            <input type="number" name="harga" id="harga" class="form-control" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="stok" class="form-label">Stok</label>
-                            <input type="number" name="stok" id="stok" class="form-control" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="supplier_id" class="form-label">Supplier</label>
-                            <select name="supplier_id" id="supplier_id" class="form-select">
-                                <option value="">-- Pilih Supplier --</option>
-                                @foreach ($supplier as $item)
-                                    <option value="{{ $item->id }}">{{ $item->nama_supplier }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="d-flex justify-content-end">
-                            <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Batal</button>
-                            <button type="submit" class="btn btn-primary">Simpan</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+    <!-- Include Create & Edit Barang Modal -->
+    @include('barang.create')
+    @include('barang.edit') <!-- Tambahkan ini -->
 @endsection
 
 @push('scripts')
+    <!-- Include jQuery and DataTables JS -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
@@ -129,6 +93,28 @@
                         "previous": "Sebelumnya"
                     }
                 }
+            });
+
+            // Event click untuk edit
+            $('.editBarangBtn').on('click', function() {
+                let id = $(this).data('id');
+                let nama = $(this).data('nama');
+                let stok = $(this).data('stok');
+                let kategori = $(this).data('kategori');
+                let harga = $(this).data('harga');
+                let supplier = $(this).data('supplier');
+
+                // Isi form modal edit
+                $('#edit_nama_barang').val(nama);
+                $('#edit_stok').val(stok);
+                $('#edit_kategori').val(kategori);
+                $('#edit_harga').val(harga);
+                $('#edit_supplier').val(supplier);
+
+                // Update form action untuk edit
+                let url = "{{ route('barang.update', ':id') }}";
+                url = url.replace(':id', id);
+                $('#editBarangForm').attr('action', url);
             });
         });
     </script>

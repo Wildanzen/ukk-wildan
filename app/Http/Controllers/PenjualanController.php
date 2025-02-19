@@ -11,8 +11,11 @@ class PenjualanController extends Controller
     public function index()
     {
         $penjualan = Penjualan::with('barang')->get();
-        return view('penjualan.index', compact('penjualan'));
+        $barang = Barang::all(); // Ambil semua barang
+
+        return view('penjualan.index', compact('penjualan', 'barang'));
     }
+
 
     public function create()
     {

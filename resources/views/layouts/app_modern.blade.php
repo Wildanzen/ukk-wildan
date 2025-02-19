@@ -56,12 +56,12 @@
                                 <span class="hide-menu">Barang</span>
                             </a>
                         </li>
-                        <li class="sidebar-item">
+                        {{-- <li class="sidebar-item">
                             <a class="sidebar-link" href="{{ route('pembelian.index') }}" aria-expanded="false">
                                 <span><i class="fas fa-shopping-cart"></i></span>
                                 <span class="hide-menu">Pembelian</span>
                             </a>
-                        </li>
+                        </li> --}}
                     </ul>
                 </nav>
             </div>

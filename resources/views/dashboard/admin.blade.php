@@ -45,28 +45,6 @@
                             </div>
                         </a>
                     </div>
-                    <!-- Pembelian Card -->
-                    <div class="col-md-4 mb-4">
-                        <a href="{{ route('pembelian.index') }}" class="text-decoration-none">
-                            <div class="card shadow border-0">
-                                <div class="card-body text-center">
-                                    <i class="fas fa-shopping-cart fa-2x text-danger mb-3"></i>
-                                    <h5 class="card-title">Kelola Pembelian</h5>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    <!-- Penjualan Card -->
-                    <div class="col-md-4 mb-4">
-                        <a href="{{ route('penjualan.index') }}" class="text-decoration-none">
-                            <div class="card shadow border-0">
-                                <div class="card-body text-center">
-                                    <i class="fas fa-cash-register fa-2x text-info mb-3"></i>
-                                    <h5 class="card-title">Kelola Penjualan</h5>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
                 </div>
             </main>
         </div>
